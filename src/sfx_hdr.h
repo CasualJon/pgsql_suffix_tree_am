@@ -44,7 +44,7 @@ int canAddTups(Tuples *node) {
     if (node->tupleCount < MAX_VAL - 1) return 1;
     else return 0;
 }
-void pushTuple(Tuples *add_to_node, ItemPointerData data) {
+void pushTuple(Tuples *add_to_node, ItemPointerData *data) {
     add_to_node->items[add_to_node->tupleCount] = data;
     add_to_node->tupleCount++;
 }

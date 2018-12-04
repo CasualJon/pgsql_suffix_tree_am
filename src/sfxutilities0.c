@@ -20,7 +20,7 @@
 PG_MODULE_MAGIC;
 
 /*
- * RUM handler function: return IndexAmRoutine with access method parameters
+ * SFX Tree handler function: return IndexAmRoutine with access method parameters
  * and callbacks.
  */
 Datum sfxhandler(PG_FUNCTION_ARGS) {
@@ -85,4 +85,21 @@ Datum sfxhandler(PG_FUNCTION_ARGS) {
 	amroutine->amparallelrescan = NULL;
 
 	PG_RETURN_POINTER(amroutine);
+}
+
+//Functions to manage the linked list of sfxNodeTups
+int canAddTups(Tuples *node) {
+    if (node->tupleCount < MAX_VAL - 1) return 1;
+    else return 0;
+}
+void pushTuple(Tuples *add_to_node, ItemPointerData *data) {
+    add_to_node->items[add_to_node->tupleCount] = data;
+    add_to_node->tupleCount++;
+}
+void addTupsLink(Tuples *extend_from_node, ItemPointerData *data) {
+    Tuples *newSfxNodeTups = (Tuples *) palloc(sizeof(Tuples));
+    newSfxNodeTups->tupleCount = 1;
+    newSfxNodeTups->items[0] = data;
+    newSfxNodeTups->nextTups = NULL;
+    extend_from_node->nextTups = newSfxNodeTups;
 }

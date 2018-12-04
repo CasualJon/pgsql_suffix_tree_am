@@ -40,21 +40,13 @@ typedef struct sfxTreeNode {
 } Node;
 
 //Functions to manage the linked list of sfxNodeTups
-int canAddTups(Tuples *node) {
-    if (node->tupleCount < MAX_VAL - 1) return 1;
-    else return 0;
-}
-void pushTuple(Tuples *add_to_node, ItemPointerData *data) {
-    add_to_node->items[add_to_node->tupleCount] = data;
-    add_to_node->tupleCount++;
-}
-void addTupsLink(Tuples *extend_from_node, ItemPointerData *data) {
-    newSfxNodeTups = (Tuples *) palloc(sizeof(Tuples));
-    newSfxNodeTups->tupleCount = 1;
-    newSfxNodeTups->items[0] = data;
-    newSfxNodeTups->nextTups = NULL;
-    extend_from_node->nextTups = &newSfxNodeTups;
-}
+int canAddTups    (Tuples *node);
+
+void pushTuple    (Tuples *add_to_node,
+                   ItemPointerData *data);
+
+void addTupsLink  (Tuples *extend_from_node,
+                   ItemPointerData *data);
 
 //^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 //Function Declarations

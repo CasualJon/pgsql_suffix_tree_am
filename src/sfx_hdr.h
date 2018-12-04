@@ -14,8 +14,8 @@
 #include "access/sdir.h"
 #include "lib/rbtree.h"
 #include "storage/bufmgr.h"
-#include <stdio.h> 
-#include <string.h> 
+#include <stdio.h>
+#include <string.h>
 #include <stdlib.h>
 
 //^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -28,20 +28,33 @@
 
 //^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 //Hold to define structs for node details
-  
-struct sfxTreeNode { 
-	char val;
-    struct sfxTreeNode *children[MAX_CHAR]; 
-    struct sfxTreeTups sfxTups; 
-}; 
-   
-typedef struct sfxTreeNode Node; 
+typedef struct sfxNodeTups {
+    struct ItemPointerData *items[MAX_VAL]
+    struct sfxTreeTups *nextTups
+} Tuples;
+typedef struct sfxTreeNode {
+    char val;
+    struct sfxTreeNode *children[MAX_CHAR];
+    struct sfxNodeTups sfxTups;
+} Node;
 
-struct sfxTreeTups {
-	struct ItemPointerData *items[MAX_VAL]
-	struct sfxTreeTups *nextTups
-};
-   
+//Functions to manage the linked list of sfxNodeTups
+int canAddTups(Tuples *node) {
+    if (node->tupleCount < MAX_VAL - 1) return 1;
+    else return 0;
+}
+void pushTuple(Tuples *add_to_node, ItemPointerData data) {
+    add_to_node->items[add_to_node->tupleCount] = data;
+    add_to_node->tupleCount++;
+}
+struct sfxNodeTups *addTupsLink(Tuples *extend_from_node, ItemPointerData data) {
+    newSfxNodeTups = (Tuples *) palloc(sizeof(Tuples));
+    newSfxNodeTups->tupleCount = 1;
+    newSfxNodeTups->items[0] = data;
+    newSfxNodeTups->nextTups = NULL;
+    extend_from_node->nextTups = newSfxNodeTups;
+}
+
 //^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 //Function Declarations
 //File: sfxscan.c

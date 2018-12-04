@@ -33,7 +33,7 @@ extern IndexScanDesc sfxbeginscan (Relation rel,
 
 extern void sfxendscan            (IndexScanDesc scan);
 
-extern void sfxrescan             (IndexScanDesc scan, 
+extern void sfxrescan             (IndexScanDesc scan,
                                    ScanKey scankey,
                                    int nscankeys,
 		                               ScanKey orderbys,

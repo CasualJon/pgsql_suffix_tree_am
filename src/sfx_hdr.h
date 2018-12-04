@@ -29,6 +29,7 @@
 //^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 //Hold to define structs for node details
 typedef struct sfxNodeTups {
+    int tupleCount;
     struct ItemPointerData *items[MAX_VAL]
     struct sfxTreeTups *nextTups
 } Tuples;

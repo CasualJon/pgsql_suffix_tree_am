@@ -14,16 +14,34 @@
 #include "access/sdir.h"
 #include "lib/rbtree.h"
 #include "storage/bufmgr.h"
+#include <stdio.h> 
+#include <string.h> 
+#include <stdlib.h>
 
 //^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 //Hold to include any additional headers required
 
 //^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 //Hold to define magic numbers
+#define MAX_CHAR 128 // was 256
+#define MAX_VAL 256
 
 //^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 //Hold to define structs for node details
+  
+struct sfxTreeNode { 
+	char val;
+    struct sfxTreeNode *children[MAX_CHAR]; 
+    struct sfxTreeTups sfxTups; 
+}; 
+   
+typedef struct sfxTreeNode Node; 
 
+struct sfxTreeTups {
+	struct ItemPointerData *items[MAX_VAL]
+	struct sfxTreeTups *nextTups
+};
+   
 //^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 //Function Declarations
 //File: sfxscan.c
